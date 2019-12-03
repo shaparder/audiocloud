@@ -1,0 +1,24 @@
+{
+	"name": "audiocloud_audio_server",
+	"version": "1.0.0",
+	"description": "server handling audio for audiocloud - storing audio and retrieving audio",
+	"main": "index.js",
+	"private": true,
+	"dependencies": {
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"mongodb": "^3.3.4",
+		"mp3-duration": "^1.1.0",
+		"multer": "^1.4.2"
+	},
+	"devDependencies": {
+		"dotenv": "^8.2.0",
+		"nodemon": "^2.0.1"
+	},
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js"
+	},
+	"author": "shaparder",
+	"license": "MIT"
+}
