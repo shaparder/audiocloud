@@ -1,3 +1,5 @@
+const mongodb = require('mongodb');
+
 const url = process.env.DB_URL;
 const usr = process.env.DB_USR;
 const pwd = process.env.DB_PWD;
