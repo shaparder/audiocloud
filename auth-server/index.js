@@ -4,7 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const api = require('./api/routes/tracks');
+const api = require('./api/routes/users');
 
 // middleware
 app.use(cors());
@@ -12,11 +12,11 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 // redirect everything to the router
-app.use('/api/tracks', api);
+app.use('/api/users', api);
 
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 8082;
 app.listen(port, (err) => {
 	if (err) throw err;
-	console.log('audio server: ' + "\x1b[33m%s\x1b[0m", 'http://localhost:' + port + '/api/tracks');
+	console.log( 'authentication server: ' + "\x1b[31m%s\x1b[0m", "http://localhost:" + port + "/api/users");
 });
 

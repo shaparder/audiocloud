@@ -36,6 +36,4 @@ const upload = multer({
 	limits: limits 
 });
 
-module.exports = {
-	upload: upload,
-}
+module.exports.upload = upload;

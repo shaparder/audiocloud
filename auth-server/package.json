@@ -1,0 +1,26 @@
+{
+	"name": "audiocloud_auth_server",
+	"version": "1.0.0",
+	"description": "server handling authentication for audiocloud - loging and registering users",
+	"main": "app.js",
+	"private": true,
+	"dependencies": {
+		"@hapi/joi": "^16.1.8",
+		"bcrypt": "^3.0.7",
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"jsonwebtoken": "^8.5.1",
+		"mongodb": "^3.3.4",
+		"mongoose": "^5.7.13"
+	},
+	"devDependencies": {
+		"dotenv": "^8.2.0",
+		"nodemon": "^2.0.1"
+	},
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js",
+		"author": "shaparder",
+		"license": "MIT"
+	}
+}

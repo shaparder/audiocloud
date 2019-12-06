@@ -4,7 +4,7 @@ const mongodb = require('mongodb');
 const db_url = process.env.DB_URL;
 
 // Load track collection
-async function loadTracksCollection(){
+async function loadUsersCollection(){
 	const client = await mongodb.MongoClient.connect(
 		db_url,
 		{
@@ -12,7 +12,7 @@ async function loadTracksCollection(){
 			useNewUrlParser: true
 		}
 	);
-	return client.db('audiocloud-dev').collection('tracks');
+	return client.db('audiocloud-dev').collection('users');
 }
 
-module.exports.loadTracksCollection = loadTracksCollection;
+module.exports.loadUsersCollection = loadUsersCollection;

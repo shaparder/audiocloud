@@ -30,7 +30,7 @@ router.post('/', upload.single('trackfile'), async (req, res) => {
 		path: req.file.path,
 		downloadCount: 0
 	});
-	res.status(201).send(await tracks.findOne({ name: req.body.trackname, date: date }));
+	res.status(201).send();
 });
 
 // Download track
@@ -53,7 +53,7 @@ router.delete('/delete/:id', async (req, res) => {
 		if (err) { console.error(err); return ; }
 		tracks.deleteOne({ _id: id });
 	});
-	res.status(200).send({});
+	res.status(200).send();
 });
 
 module.exports = router;
