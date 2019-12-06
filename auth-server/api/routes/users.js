@@ -46,15 +46,15 @@ router.post('/login', async (req, res) => {
 
 	// validate data
 	var { error } = loginValidation(req.body);
-	if ( error ) return res.status(400).send('wrong credentials');
+	if ( error ) return res.status(400).send('wrong credentials (validation)');
 
 	// check if user email is correct
 	var user = await users.findOne({ email: req.body.email });
-	if ( !user ) return res.status(400).send('wrong credentials'); 
+	if ( !user ) return res.status(400).send('wrong credentials (email doesn\'t exist)');
 
 	// check if password is correct
 	var validPass = await bcrypt.compare(req.body.password, user.password);
-	if ( !validPass ) return res.status(400).send('wrong credentials');
+	if ( !validPass ) return res.status(400).send('wrong credentials (incorrect password)');
 
 	// create and assign token
 	var token = jwt.sign({ _id: user._id, user: user.username }, process.env.TOKEN_SECRET);
@@ -62,11 +62,15 @@ router.post('/login', async (req, res) => {
 
 });
 
+// verify token
 router.post('/verify', (req, res) => {
+	// get the token from the header
 	var token = req.header('auth-token');
 
+	// check if token exists
 	if( !token ) return res.status(401).send('Acces denied');
 
+	//check if token is correct
 	try {
 		const verified = jwt.verify(token, process.env.TOKEN_SECRET);
 		req.user = verified;
