@@ -41,12 +41,13 @@ router.post('/register', async (req, res) => {
 
 // validate and login user
 router.post('/login', async (req, res) => {
-	// get users collection
-	const users = await loadUsersCollection();
 
 	// validate data
 	var { error } = loginValidation(req.body);
 	if ( error ) return res.status(400).send('wrong credentials (validation)');
+
+	// get users collection
+	const users = await loadUsersCollection();
 
 	// check if user email is correct
 	var user = await users.findOne({ email: req.body.email });

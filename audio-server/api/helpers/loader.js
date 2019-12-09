@@ -1,17 +1,20 @@
 const multer = require('multer');
 const path = require('path');
+const mkdirp = require('mkdirp');
 
-// storage path and file name
+// storage path and file name, creates folder if it doesn't exist
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, path.join(process.cwd(), '/trackfiles'));
+		const dest = path.join(process.cwd(), '/trackfiles');
+		mkdirp.sync(dest);
+		cb(null, dest);
 	},
 	filename: (req, file, cb) => {
 		cb(null, req.body.trackname + '.mp3');
 	}
 });
 
-// custom file filter
+// custom file filter, allows only mp3, mpeg files
 const fileFilter = function(req, file, cb) {
 	console.log('new file:\n', file);
 	const allowedTypes = ['audio/mp3', 'audio/mpeg'];
@@ -23,7 +26,7 @@ const fileFilter = function(req, file, cb) {
 	cb(null, true);
 };
 
-// limits for the upload
+// size and name length limits for the file upload
 const limits = {
 	fieldNameSize: 20,
 	fileSize: 50000000,	
