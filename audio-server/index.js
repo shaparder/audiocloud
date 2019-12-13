@@ -16,7 +16,8 @@ app.use('/api/tracks', api);
 
 const port = process.env.PORT || 8081;
 app.listen(port, (err) => {
-	if (err) throw err;
+  if (err) throw err;
+  console.log('start time: ' + Date(Date.now()).toLocaleString('en-GB'));
 	console.log('audio server: ' + "\x1b[33m%s\x1b[0m", 'http://localhost:' + port + '/api/tracks');
 });
 

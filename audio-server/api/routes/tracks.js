@@ -13,47 +13,69 @@ const router = express.Router();
 
 // Get list of tracks
 router.get('/', async (req, res) => {
-	const tracks = await loadTracksCollection();
-	res.send(await tracks.find({}).toArray());
+  const tracks = await loadTracksCollection();
+  res.send(await tracks.find({}).toArray());
 });
 
 // Upload track
-router.post('/', upload.single('trackfile'), async (req, res) => {
-	var date = new Date().toLocaleString();
-	const tracks = await loadTracksCollection();
-	await tracks.insertOne({
-		user: req.body.username,
-		name: req.body.trackname,
-		size: req.file.size,
-		// length: audiolength(req.file),
-		date: date,
-		path: req.file.path,
-		downloadCount: 0
-	});
-	res.status(201).send();
+router.post('/upload', upload.single('trackfile'), async (req, res) => {
+  var date = new Date();
+  const tracks = await loadTracksCollection();
+  try {
+    await tracks.insertOne({
+      user: req.body.username,
+      name: req.body.trackname,
+      size: req.file.size,
+      type: req.body.type,
+      // length: audiolength(req.file),
+      date: date,
+      dDay: date.toDateString(),
+      path: req.file.path,
+      downloadCount: 0
+    });
+    res.status(201).send('The file was sucessfully uploaded !');
+  } catch (err) {
+    console.error(err);
+    return res.status(400).send('A problem occured trying to add info from database ...');
+  }
 });
 
 // Download track
 router.get('/download/:id', async (req, res) => {
-	const tracks = await loadTracksCollection();
-	var id = new mongodb.ObjectID(req.params.id);
-	var track = await tracks.findOne({ _id: id });
-	res.download(track.path, track.name + '.mp3', (err) => {
-		if (err) { console.error(err); return ; }
-		tracks.updateOne({ _id: id }, { $inc: {downloadCount: 1}});
-	});
+  const tracks = await loadTracksCollection();
+  var id = new mongodb.ObjectID(req.params.id);
+  var track = await tracks.findOne({ _id: id });
+  var trackPath = String(track.path);
+  var trackName = String(track.user + ' - ' + track.name + '.mp3');
+  res.download(trackPath, trackName, (err) => {
+    if (err) {
+      console.error(err);
+      return ;
+    } else {
+    tracks.updateOne({ _id: id }, { $inc: { downloadCount: 1 } });
+    // return res.status(200).send('The download should start ...')
+    }
+  });
 });
 
 // Delete track
 router.delete('/delete/:id', async (req, res) => {
-	const tracks = await loadTracksCollection();
-	var id = new mongodb.ObjectID(req.params.id);
-	var track = await tracks.findOne({ _id: id });
-	fs.unlink(track.path, (err) => {
-		if (err) { console.error(err); return ; }
-		tracks.deleteOne({ _id: id });
-	});
-	res.status(200).send();
+  const tracks = await loadTracksCollection();
+  var id = new mongodb.ObjectID(req.params.id);
+  var track = await tracks.findOne({ _id: id });
+  fs.unlink(track.path, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(400).send('A problem occured trying to delete the file ...');
+    }
+    try {
+      tracks.deleteOne({ _id: id });
+      return res.status(200).send();
+    } catch (err) {
+      console.error(err);
+      return res.status(400).send('A problem occured trying to delete info from database ...')
+    }
+  });
 });
 
 module.exports = router;
