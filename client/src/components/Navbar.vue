@@ -6,7 +6,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-toolbar-title class="white--text">
+      <v-toolbar-title large class="white--text">
         <unicon left name="boombox" fill="white" />
         <span class="font-weight-light">AUDIO</span>
         <span>CLOUD</span>
