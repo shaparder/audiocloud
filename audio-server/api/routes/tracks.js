@@ -13,7 +13,6 @@ const router = express.Router();
 
 // Get list of tracks
 router.get('/load', async (req, res) => {
-  console.log(req.url);
   const tracks = await loadTracksCollection();
   if (Object.keys(req.query.query).length === 0){ 
     return res.send(await tracks.find({}).toArray());
