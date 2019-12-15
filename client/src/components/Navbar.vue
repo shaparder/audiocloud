@@ -24,15 +24,36 @@
 
       <v-spacer></v-spacer>
 
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn text v-on="on" color="white" class="white--text">
+            <unicon name="angle-down" fill="white" />
+            <span>Menu</span>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item v-for="(link,idx) in links" :key="idx" :to="link.route">
+            <v-list-item-title>{{ link.text }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
       <v-btn text class="white--text">
-        <span style="color: white;">SIGN OUT</span>
-        <unicon right name="sign-out-alt" fill="white" />
+        <span class="white--text">UPLOAD</span>
+        <unicon right name="export" fill="white" />
       </v-btn>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app color="white">
+      <v-row class="flex-column mt-12 mb-3" align="center">
+        <v-avatar size="100" color="primary">
+          <span class="white--text headline">USER</span>
+        </v-avatar>
+        <p class="accent--text subheading mt-3">USERNAME</p>
+        <LoginModal />
+      </v-row>
       <v-list nav>
-        <v-list-item v-for="link in links" :key="link.text" router :to="link.route" class="white--text">
+        <v-list-item v-for="(link, idx) in links" :key="idx" router :to="link.route" class="white--text">
           <v-list-item-icon>
             <unicon :name="link.icon" fill="#5AF67F" />
           </v-list-item-icon>
@@ -46,7 +67,10 @@
 </template>
 
 <script>
+import LoginModal from '@/components/LoginModal'
+
 export default {
+  components: { LoginModal },
   data: () => {
     return {
       drawer: false,
