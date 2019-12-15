@@ -12,9 +12,16 @@ const upload = loader.upload;
 const router = express.Router();
 
 // Get list of tracks
-router.get('/', async (req, res) => {
+router.get('/load', async (req, res) => {
+  console.log(req.url);
   const tracks = await loadTracksCollection();
-  res.send(await tracks.find({}).toArray());
+  if (Object.keys(req.query.query).length === 0){ 
+    return res.send(await tracks.find({}).toArray());
+  } else {
+    var regex = new RegExp(req.query.query, "gi");
+    var search = { $or: [{ name: regex }, { user: regex }] };
+    return res.send(await tracks.find(search).toArray());
+  }
 });
 
 // Upload track

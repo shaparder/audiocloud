@@ -7,6 +7,7 @@ const app = express();
 const api = require('./api/routes/tracks');
 
 // middleware
+app.disable('x-powered-by');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
