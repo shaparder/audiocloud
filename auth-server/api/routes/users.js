@@ -35,12 +35,15 @@ router.post('/register', async (req, res) => {
 
 	// save new user to database
 	await users.insertOne({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    fullname: req.body.firstname + req.body.lastname,
 		username: req.body.username,
 		email: req.body.email, 
 		password: hashedPassword,
 		date: date
 	});
-	res.status(201).send(await users.findOne({ email: req.body.email, date: date }));
+  res.status(201).send(await users.findOne({ email: req.body.email, date: date }));
 });
 
 // validate and login user
