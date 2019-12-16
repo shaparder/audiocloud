@@ -65,13 +65,13 @@ router.post('/login', async (req, res) => {
 	if ( !validPass ) return res.status(400).send('wrong credentials (incorrect password)');
 
 	// create and assign token
-	var token = jwt.sign({ _id: user._id, user: user.username }, process.env.TOKEN_SECRET);
+	var token = jwt.sign({ _id: user._id, user: user.username }, process.env.TOKEN_SECRET, { expiresIn: 60 * 60 * 24 * 7 });
 	res.header('auth-token', token).send(`logged in as ${user.username}`);
 
 });
 
 // verify token
-router.post('/verify', (req, res) => {
+router.get('/verify', (req, res) => {
 	// get the token from the header
 	var token = req.header('auth-token');
 

@@ -18,6 +18,7 @@ app.use('/api/users', api);
 const port = process.env.PORT || 8082;
 app.listen(port, (err) => {
 	if (err) throw err;
-	console.log( 'authentication server: ' + "\x1b[31m%s\x1b[0m", "http://localhost:" + port + "/api/users");
+  console.log('start time: ' + Date(Date.now()).toLocaleString('en-GB'));
+	console.log( 'authentication server: ' + "\x1b[33m%s\x1b[0m", "http://localhost:" + port + "/api/users");
 });
 
