@@ -38,15 +38,12 @@
         </v-list>
       </v-menu>
 
-      <v-btn text class="white--text">
-        <span class="white--text">UPLOAD</span>
-        <unicon right name="export" fill="white" />
-      </v-btn>
+      <UploadModal />
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app color="white">
       <v-row class="flex-column mt-12 mb-3" align="center">
-        <v-avatar size="100" color="primary">
+        <v-avatar size="100" color="accent">
           <span class="white--text headline">USER</span>
         </v-avatar>
         <p class="accent--text subheading mt-3">USERNAME</p>
@@ -68,9 +65,10 @@
 
 <script>
 import LoginModal from '@/components/LoginModal'
+import UploadModal from '@/components/UploadModal'
 
 export default {
-  components: { LoginModal },
+  components: { LoginModal, UploadModal },
   data: () => {
     return {
       drawer: false,

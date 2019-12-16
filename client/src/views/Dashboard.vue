@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <FileList :query="queryString"/>
+    <FileList :query="queryString" :key="listKey"/>
   </div>
 </template>
 
@@ -13,8 +13,14 @@ export default {
   components: { FileList },
   data() {
     return {
-      queryString: ''  
+      queryString: '',
+      listKey: 0
     }
+  },
+  mounted: function() {
+    this.$root.$on('refreshList', (add) => {
+      this.listKey += add;
+    })
   }
 }
 </script>

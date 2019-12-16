@@ -1,5 +1,5 @@
 <template>
-  <v-btn @click="download" depressed block color="accent"><unicon name="import" fill="white" /></v-btn>
+  <v-btn @click="download" depressed color="anti"><unicon name="import" fill="white" /></v-btn>
 </template>
 
 <script>

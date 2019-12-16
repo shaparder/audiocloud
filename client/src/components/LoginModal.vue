@@ -2,7 +2,7 @@
   <div class="text-center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn color="orange white--text" depressed v-on="on">Account</v-btn>
+        <v-btn color="anti white--text" depressed v-on="on">Account</v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -15,28 +15,32 @@
                 <v-text-field
                   label="First name"
                   v-model="firstname"
-                  :rules="[rules.name]">
-                </v-text-field>
+                  :rules="[rules.name]"
+                  color="anti"
+                ></v-text-field>
               </v-col>
               <v-col cols="6">
                 <v-text-field
                   label="Last name"
                   v-model="lastname"
-                  :rules="[rules.name]">
-                </v-text-field>
+                  :rules="[rules.name]"
+                  color="anti"
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
                   label="Username"
                   v-model="username"
-                  :rules="[rules.required, rules.username]">
-                </v-text-field>
+                  :rules="[rules.required, rules.username]"
+                  color="anti"
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
                   label="Email"
                   type="email"
                   v-model="email"
+                  color="anti"
                   :rules="[rules.required, rules.email]"></v-text-field>
               </v-col>
               <v-col cols="12">
@@ -49,6 +53,7 @@
                   name="input-10-1"
                   hint="8+ characters with uppercases, lowercases and numbers" 
                   counter
+                  color="anti"
                   @click:append="show = !show">
                   </v-text-field>
               </v-col>

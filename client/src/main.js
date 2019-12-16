@@ -8,7 +8,10 @@ import { uniHeart, uniBoombox, uniSearch, uniUser, uniCog, uniMusic, uniImport, 
 
 Unicon.add([uniHeart, uniBoombox, uniSearch, uniUser, uniCog, uniMusic, uniImport, uniExport, uniSignOutAlt, uniSilentSquint, uniClock, uniSort, uniMusicNote, uniDocument, uniExpandArrows, uniAngleDown])
 Vue.use(Unicon)
+
 Vue.prototype.$axios = axios
+
+import './helpers/filters.js';
 
 new Vue({
   router,

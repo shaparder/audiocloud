@@ -29,24 +29,25 @@
 
       <v-card outlined flat v-for="file in files" :key="file.id">
         <v-row no-gutters :class="`pa-3 file ${file.type}`">
-          <v-col cols="12" sm="4" xs="6">
+          <v-col cols="12" md="5" sm="6" xs="6">
             <div class="caption grey--text">Filename</div>
-            <v-btn text light class="text-truncate">{{ file.name }}</v-btn>
+            <v-btn text light class="text-truncate">{{ file.name | truncate(40) }}</v-btn>
           </v-col>
-          <v-col cols="12" sm="4" xs="6">
+          <v-col cols="12" md="3" sm="6" xs="6">
             <div class="caption grey--text">Uploader</div>
-            <v-btn text light>{{ file.user }}</v-btn>
+            <v-btn text light>{{ file.user | truncate(30) }}</v-btn>
           </v-col>
-          <v-col cols="12" sm="2" xs="6">
+          <v-col cols="12" md="2" sm="6" xs="6">
             <div class="caption grey--text">Date</div>
             <v-btn text light disabled>{{ file.dDay }}</v-btn>
           </v-col>
-          <v-col cols="12" sm="1" xs="3">
+          <v-col cols="12" md="1" sm="3" xs="3">
             <div class="caption grey--text">Size</div>
-            <v-btn text light disabled>{{ file.size }}b</v-btn>
+            <v-btn text light disabled>{{ file.size | prettyBytes }}</v-btn>
           </v-col>
-          <v-col cols="12" sm="1" xs="3">
+          <v-col cols="12" md="1" sm="3" xs="3" class="flex-column text-center">
             <DownloadButton :fileId="file._id"></DownloadButton>
+            <div class="caption grey--text">Count: {{ file.downloadCount }}</div>
           </v-col>
         </v-row>
       </v-card>
@@ -98,10 +99,10 @@ export default {
 <style span>
 
 .file.sample {
-  border-left: 4px solid orange;
+  border-left: 4px solid #F070A1;
 }
 .file.track  {
-  border-left: 4px solid aqua;
+  border-left: 4px solid #9FEDD7;
 }
 span.v-btn__content {
   white-space: normal;
