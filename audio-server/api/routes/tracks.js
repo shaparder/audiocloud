@@ -31,8 +31,9 @@ router.post('/upload', upload.single('trackfile'), async (req, res) => {
     await tracks.insertOne({
       user: req.body.username,
       name: req.body.trackname,
+      desc: req.body.description,
+      type: req.body.typefile,
       size: req.file.size,
-      type: req.body.type,
       // length: audiolength(req.file),
       date: date,
       dDay: date.toDateString(),
