@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
 	await users.insertOne({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
-    fullname: req.body.firstname + req.body.lastname,
+    fullname: req.body.firstname + ' ' + req.body.lastname,
 		username: req.body.username,
 		email: req.body.email, 
 		password: hashedPassword,
