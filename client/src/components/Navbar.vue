@@ -74,8 +74,8 @@ export default {
       drawer: false,
       links: [
         { icon: 'music', text: 'Dashboard', route: '/'},
-        { icon: 'user', text: 'Profile', route: '/user/:username'},
-        { icon: 'cog', text: 'Settings', route: '/settings'},
+        { icon: 'user', text: 'Profile', route: '/' + 'yourusername'},
+        // { icon: 'cog', text: 'Settings', route: '/settings'},
       ]
     }
   }

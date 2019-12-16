@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="pa-10 mys-5">
+    <v-container fluid class="px-10 my-5">
 
       <v-row v-if="errored" class="flex-column" align="center" align-content="center">
           <unicon name="silent-squint" fill="grey"/>
