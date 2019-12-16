@@ -117,16 +117,15 @@ export default {
       formData.set('typefile', this.typeselect);
       formData.append('trackfile', this.trackfile);
 
-      let options = {
-          headers: { 'Content-Type': 'multipart/form-data' }, 
-
-      }
-
+     // this.$axios
+       // .get(process.env,VUE_APP_AUTH_API_URL + '/api/users/verify',
+        //{ headers: { 'auth-token': jwt } }
+        //)
       this.$axios
         .post(
           process.env.VUE_APP_AUDIO_API_URL + '/api/tracks/upload',
           formData,
-          options
+          { headers: { 'Content-Type': 'multipart/form-data' } }
           )
         .then(response => {
           console.log(response);

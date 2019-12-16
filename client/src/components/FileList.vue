@@ -109,9 +109,5 @@ span.v-btn__content {
   max-width: 100%;
   text-overflow: ellipsis;
 }
-h1.page-title {
-  color: lightgrey;
-  font-weight: thin;
-}
 
 </style>
