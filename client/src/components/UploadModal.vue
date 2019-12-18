@@ -14,7 +14,7 @@
         <v-card-title>
           <span class="headline">Upload file</span>
           <v-spacer></v-spacer>
-          <v-btn icon @click="dialog = false" text color="grey" ><v-icon right>mdi-close</v-icon></v-btn>
+          <v-btn icon @click="dialog = false" text color="grey" right><v-icon>mdi-close</v-icon></v-btn>
         </v-card-title>
 
         <v-card-text>
@@ -78,10 +78,6 @@
       </v-card>
     </v-dialog>
 
-    <v-snackbar v-model="snackbar" absolute bottom>
-      <p>Your file was sucessfully uploaded !</p>
-      <v-btn color="accent" text @click="snackbar = false">Close</v-btn>
-    </v-snackbar>
   </div>
 </template>
 
@@ -91,7 +87,6 @@ export default {
     return {
       dialog: false,
       form: false,
-      snackbar: false,
       rules: {
           required: value => !!value || 'Required.',
           namelength: v => !v || v.length <= 30 && v.length >= 1 || 'File name must be 1 to 30 characters',
@@ -108,19 +103,21 @@ export default {
       trackfile: null
     }
   },
+  computed: {
+    user: function() {
+      return this.$store.getters.getUser;
+    }
+  },
   methods: {
     upload() {
+      var message;
       let formData = new FormData();
-      formData.set('username', 'getuserfromjwt');
+      formData.set('username', this.user);
       formData.set('trackname', this.trackname);
       formData.set('description', this.description);
       formData.set('typefile', this.typeselect);
       formData.append('trackfile', this.trackfile);
 
-     // this.$axios
-       // .get(process.env,VUE_APP_AUTH_API_URL + '/api/users/verify',
-        //{ headers: { 'auth-token': jwt } }
-        //)
       this.$axios
         .post(
           process.env.VUE_APP_AUDIO_API_URL + '/api/tracks/upload',
@@ -128,15 +125,15 @@ export default {
           { headers: { 'Content-Type': 'multipart/form-data' } }
           )
         .then(response => {
-          console.log(response);
-          if ( response.status == 201 ){
-            this.$root.$emit('refreshList', 1);
-            this.dialog = false;
-            this.$refs.form.reset();
-            this.snackbar = true;
-          }
+          this.$root.$emit('refreshList', 1);
+          this.dialog = false;
+          this.$refs.form.reset();
+          message = response.data;
           })
-        .catch(error => { console.error(error) })
+        .catch(error => {
+          message = error.response.data;
+        })
+        .finally(() => this.$store.commit('setMessage', message))
     }
   }
 }

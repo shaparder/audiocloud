@@ -21,6 +21,7 @@
         color="anti"
         outlined
         solo
+        flat
       ></v-text-field>
     </v-container>
     <FileList :query="queryString" :key="listKey"/>

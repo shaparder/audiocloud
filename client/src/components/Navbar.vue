@@ -12,16 +12,6 @@
         <span>CLOUD</span>
       </v-toolbar-title>
 
-<!--  
-      <v-text-field
-        outlined
-        hide-details
-        rounded
-        dense
-        label="Search ..."
-        append-icon="search"
-        light></v-text-field> -->
-
       <v-spacer></v-spacer>
 
       <v-menu offset-y>
@@ -41,34 +31,58 @@
       <UploadModal />
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app color="white">
+    <v-navigation-drawer v-model="drawer" app color="grey lighten-4" class="flex-column">
+
       <v-row class="flex-column mt-12 mb-3" align="center">
-        <v-avatar size="100" color="accent">
-          <span class="white--text headline">USER</span>
-        </v-avatar>
-        <p class="accent--text subheading mt-3">USERNAME</p>
-        <LoginModal />
+        <div v-if="loggedIn" class="text-center">
+          <UserAvatar />
+          <LogoutModal />
+        </div>
+
+        <div v-else class="text-center">
+          <LoginModal />
+          <RegisterModal />
+        </div>
+
       </v-row>
-      <v-list nav>
-        <v-list-item v-for="(link, idx) in links" :key="idx" router :to="link.route" class="white--text">
-          <v-list-item-icon>
-            <unicon :name="link.icon" fill="#5AF67F" />
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title class="accent--text">{{ link.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+
+      <!-- <v-row class="flex-column align-center"> -->
+          
+        <v-list nav>
+          <v-list-item v-for="(link, idx) in links" :key="idx" router :to="link.route" class="white--text">
+            <v-list-item-icon>
+              <unicon :name="link.icon" fill="#5AF67F" />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="accent--text">{{ link.text }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item class="white--text">
+            <v-list-item-icon>
+              <unicon name="cog" fill="#5AF67F" />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="accent--text">Settings</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+
+      <!-- </v-row> -->
+
     </v-navigation-drawer>
   </nav>
 </template>
 
 <script>
 import LoginModal from '@/components/LoginModal'
+import LogoutModal from '@/components/LogoutModal'
+import RegisterModal from '@/components/RegisterModal'
 import UploadModal from '@/components/UploadModal'
+import UserAvatar from '@/components/UserAvatar'
 
 export default {
-  components: { LoginModal, UploadModal },
+  components: { LoginModal, LogoutModal, RegisterModal, UploadModal, UserAvatar },
   data: () => {
     return {
       drawer: false,
@@ -78,6 +92,11 @@ export default {
         // { icon: 'cog', text: 'Settings', route: '/settings'},
       ]
     }
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.getters.loggedIn;
+    } 
   }
 }
 </script>

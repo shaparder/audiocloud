@@ -14,7 +14,7 @@
 
       <div v-else>
 
-      <v-row class="mb-6">
+      <v-row class="mb-2 ml-2">
         <unicon name="sort" fill="lightgrey" />
         <v-tooltip top v-for="sorting in sortings" :key="sorting.id" >
           <template v-slot:activator="{ on }">
