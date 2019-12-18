@@ -36,6 +36,6 @@ const upload = multer({
 	storage: storage,
 	fileFilter: fileFilter,
 	limits: limits 
-});
+}).single('trackfile');
 
 module.exports.upload = upload;
