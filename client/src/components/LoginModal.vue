@@ -41,7 +41,7 @@
         <v-card-actions>
           <v-btn text @click="dialog = false">Close</v-btn>
           <v-spacer></v-spacer>
-          <v-btn :disabled="!form" color="accent" depressed @click="login">Submit</v-btn>
+          <v-btn :disabled="!form" color="accent" :loading="loading" depressed @click="login">Submit</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -57,6 +57,7 @@ export default {
       dialog: false,
       form: false,
       show: false,
+      loading: false,
       rules: {
           required: value => !!value || 'Required.',
           email: v => /^([a-zA-Z\d._-]+)@([a-zA-Z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/.test(v) || 'Please enter a valid email adress.',
@@ -67,6 +68,7 @@ export default {
   },
   methods: {
     login() {
+      this.loading = true;
       var message;
 
       this.$store.dispatch('login', {
@@ -80,25 +82,10 @@ export default {
       .catch(error => {
         message = error.response.data;
       })
-      .finally(() => this.$store.commit('setMessage', message))
-
-    //   this.$axios
-    //     .post(
-    //       process.env.VUE_APP_AUTH_API_URL + '/api/users/login', {
-    //       email: this.email,
-    //       password: this.password
-    //     })
-    //     .then(response => {
-    //       console.log(response);
-    //       this.dialog = false;
-    //         // store token etc
-    //       this.message = response.data;
-    //     })
-    //     .catch(error => {
-    //       console.error(error.response);
-    //       this.message = error.response.data;
-    //     })
-    //     .finally(() => this.snackbar = true)
+      .finally(() => {
+        this.loading = false;
+        this.$store.commit('setMessage', message);
+      })
     }
   }
 }

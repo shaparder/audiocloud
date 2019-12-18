@@ -13,6 +13,7 @@ const router = express.Router();
 // validating and registering a new user
 router.post('/register', async (req, res) => {
   console.log(req.body);
+  
 	// get users collection
 	const users = await loadUsersCollection();
 
@@ -98,8 +99,8 @@ router.get('/verify', (req, res) => {
 	}
 });
 
-// get users for autocomplete purpose
-router.get('/autocomplete', async (req, res) => {
+// get users list
+router.get('/userslist', async (req, res) => {
 	// get users collection
   const users = await loadUsersCollection();
   // return only username

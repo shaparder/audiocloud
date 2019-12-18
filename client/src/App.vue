@@ -1,6 +1,8 @@
 <template>
   <v-app color="grey lighten-4">
+
     <NavBar />
+    
     <v-content class="mx-8 mb-8">
         <router-view></router-view>
     </v-content>

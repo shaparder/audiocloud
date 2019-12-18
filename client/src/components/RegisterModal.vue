@@ -67,7 +67,7 @@
         <v-card-actions>
           <v-btn text @click="dialog = false">Close</v-btn>
           <v-spacer></v-spacer>
-          <v-btn :disabled="!form" color="accent" depressed @click="register">Submit</v-btn>
+          <v-btn :disabled="!form" color="accent" :loading="loading" depressed @click="register">Submit</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -84,6 +84,7 @@ export default {
       dialog: false,
       form: false,
       show: false,
+      loading: false,
       rules: {
           required: value => !!value || 'Required.',
           name: v => /[a-zA-Z]{2,30}/.test(v) || 'Characters only.',
@@ -101,6 +102,7 @@ export default {
   },
   methods: {
     register() {
+      this.loading = true;
       var message;
       this.$axios
         .post(
@@ -122,7 +124,10 @@ export default {
           console.error(error.response);
           message = error.response.data;
         })
-        .finally(() => this.$store.commit('setMessage', message))
+        .finally(() => {
+          this.loading = false;
+          this.$store.commit('setMessage', message);
+        })
     }
   }
 }

@@ -9,6 +9,7 @@
 
       <v-row v-else-if="loading" class="flex-column" align="center" align-content="center">
         <h1 class="grey--text subheading">Loading ...</h1>
+        <v-text-field disabled loading justify-center></v-text-field>
       </v-row>
 
       <v-row v-else-if="files.length < 1" class="flex-column" align="center" align-content="center">
@@ -51,7 +52,7 @@
             <v-btn text light disabled>{{ file.size | prettyBytes }}</v-btn>
           </v-col>
           <v-col cols="12" md="1" sm="3" xs="3" class="flex-column text-center">
-            <DownloadButton :fileId="file._id"></DownloadButton>
+            <DownloadButton :fileId="file._id" :fileName="filename(file.user, file.name)"></DownloadButton>
             <div class="caption grey--text">Count: {{ file.downloadCount }}</div>
           </v-col>
         </v-row>
@@ -92,6 +93,9 @@ export default {
     sortBy(prop){
       this.files.sort((a,b) => a[prop] < b[prop] ? this.orderX : this.orderY);
       [this.orderX, this.orderY] = [this.orderY, this.orderX]; 
+    },
+    filename(uploader, name) {
+      return uploader + ' - ' + name;
     }
   },
   mounted() {
