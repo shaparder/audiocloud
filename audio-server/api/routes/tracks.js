@@ -15,16 +15,20 @@ const router = express.Router();
 
 // Get list of tracks
 router.get('/load', async (req, res) => {
+  console.log(req.query);
   // load track collection
   const tracks = await loadTracksCollection();
   // send tracks matching query (all of them if empty query)
   if (Object.keys(req.query.query).length === 0){ 
     return res.send(await tracks.find({}).toArray());
-  } else {
+  } else if (Object.keys(req.query.profile).length === 0){
     var regex = new RegExp(req.query.query, "gi");
     var search = { $or: [{ name: regex }, { user: regex }] };
-    return res.send(await tracks.find(search).toArray());
+  } else {
+    var query = req.query.query;
+    var search = { user: query } ;
   }
+  return res.send(await tracks.find(search).toArray());
 });
 
 // Upload new track

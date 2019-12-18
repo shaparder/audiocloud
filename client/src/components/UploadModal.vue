@@ -72,7 +72,7 @@
         <v-card-actions>
           <v-btn text @click="$refs.form.reset()">Clear</v-btn>
           <v-spacer></v-spacer>
-          <v-btn :disabled="!form" @click="upload" class="white--text" color="accent" depressed>Submit</v-btn>
+          <v-btn :disabled="!form" @click="upload" :loading="loading" class="white--text" color="accent" depressed>Submit</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -87,6 +87,7 @@ export default {
     return {
       dialog: false,
       form: false,
+      loading: false,
       rules: {
           required: value => !!value || 'Required.',
           namelength: v => !v || v.length <= 30 && v.length >= 1 || 'File name must be 1 to 30 characters',
@@ -110,6 +111,7 @@ export default {
   },
   methods: {
     upload() {
+      this.loading = true;
       var message;
       let formData = new FormData();
       formData.set('username', this.user);
@@ -133,7 +135,10 @@ export default {
         .catch(error => {
           message = error.response.data;
         })
-        .finally(() => this.$store.commit('setMessage', message))
+        .finally(() => {
+          this.loading= false;
+          this.$store.commit('setMessage', message);
+        })
     }
   }
 }
