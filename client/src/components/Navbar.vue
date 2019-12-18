@@ -22,13 +22,22 @@
           </v-btn>
         </template>
         <v-list>
-          <v-list-item v-for="(link,idx) in links" :key="idx" :to="link.route">
-            <v-list-item-title>{{ link.text }}</v-list-item-title>
+
+          <v-list-item to="/">
+            <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item>
+
+          <div v-if="loggedIn">
+
+          <v-list-item :to="user">
+            <v-list-item-title>Profile</v-list-item-title>
+          </v-list-item>
+
+          </div>
+
         </v-list>
       </v-menu>
 
-      <UploadModal />
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app color="grey lighten-4" class="flex-column">
@@ -36,39 +45,52 @@
       <v-row class="flex-column mt-12 mb-3" align="center">
         <div v-if="loggedIn" class="text-center">
           <UserAvatar />
-          <LogoutModal />
+          <LogoutModal class="mb-2"/>
+          <UploadModal />
         </div>
 
         <div v-else class="text-center">
-          <LoginModal />
+          <LoginModal class="mb-2" />
           <RegisterModal />
         </div>
 
       </v-row>
 
-      <!-- <v-row class="flex-column align-center"> -->
-          
+<!--           
         <v-list nav>
-          <v-list-item v-for="(link, idx) in links" :key="idx" router :to="link.route" class="white--text">
+
+          <v-list-item router to="/" class="white--text">
             <v-list-item-icon>
-              <unicon :name="link.icon" fill="#5AF67F" />
+              <unicon name="music" fill="#F070A1" />
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="accent--text">{{ link.text }}</v-list-item-title>
+              <v-list-item-title class="anti--text">Dashboard</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <div v-if="loggedIn">
+
+          <v-list-item router :to="user" class="white--text">
+            <v-list-item-icon>
+              <unicon name="user" fill="#F070A1" />
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="anti--text">Profile</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-list-item class="white--text">
             <v-list-item-icon>
-              <unicon name="cog" fill="#5AF67F" />
+              <unicon name="cog" fill="#F070A1" />
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="accent--text">Settings</v-list-item-title>
+              <v-list-item-title class="anti--text">Settings</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </v-list>
 
-      <!-- </v-row> -->
+          </div>
+
+        </v-list> -->
 
     </v-navigation-drawer>
   </nav>
@@ -86,18 +108,16 @@ export default {
   data: () => {
     return {
       drawer: false,
-      links: [
-        { icon: 'music', text: 'Dashboard', route: '/'},
-        { icon: 'user', text: 'Profile', route: '/' + 'yourusername'},
-        // { icon: 'cog', text: 'Settings', route: '/settings'},
-      ]
     }
   },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
-    } 
-  }
+    },
+    user() {
+      return this.$store.getters.getUser;
+    }
+  },
 }
 </script>
 

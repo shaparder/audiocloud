@@ -2,14 +2,19 @@
     <v-container fluid class="px-10 my-5">
 
       <v-row v-if="errored" class="flex-column" align="center" align-content="center">
-          <unicon name="silent-squint" fill="grey"/>
-          <h1 class="grey--text heading">Oops! Something went wrong ...</h1>
-          <h3 class="grey--text subheading">A problem has occured when trying to get files.</h3>
+        <unicon name="silent-squint" fill="grey"/>
+        <h1 class="grey--text heading">Oops! Something went wrong ...</h1>
+        <h3 class="grey--text subheading">A problem has occured when trying to get files.</h3>
       </v-row>
 
       <v-row v-else-if="loading" class="flex-column" align="center" align-content="center">
         <h1 class="grey--text subheading">Loading ...</h1>
-        <v-text-field disabled loading justify-center></v-text-field>
+      </v-row>
+
+      <v-row v-else-if="files.length < 1" class="flex-column" align="center" align-content="center">
+        <unicon name="file-slash" fill="grey"/>
+        <h1 class="grey--text heading">No file found !</h1>
+        <h3 class="grey--text subheading">Try other keywords (name of the file or uploader's name).</h3>
       </v-row>
 
       <div v-else>
@@ -69,6 +74,8 @@ export default {
       files: null,
       loading: true,
       errored: false,
+      orderX: -1,
+      orderY: 1,
       sortings: [
         {icon: 'document', name: 'type', id: 3},
         {icon: 'music-note', name: 'name', id: 1},
@@ -83,12 +90,13 @@ export default {
   },
   methods: {
     sortBy(prop){
-      this.files.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
+      this.files.sort((a,b) => a[prop] < b[prop] ? this.orderX : this.orderY);
+      [this.orderX, this.orderY] = [this.orderY, this.orderX]; 
     }
   },
   mounted() {
     this.$axios
-      .get(process.env.VUE_APP_AUDIO_API_URL + "/api/tracks/load?query=" + this.query)
+      .get(process.env.VUE_APP_AUDIO_API_URL + "/api/tracks/load" + this.query)
       .then(response => { this.files = response.data })
       .catch(error => { console.log(error); this.errored = true; })
       .finally(() => this.loading = false)

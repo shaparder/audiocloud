@@ -10,15 +10,15 @@
         solo
         prepend-inner-icon="mdi-magnify"
         flat
-        color="anti"
+        color="accent"
         hide-no-data
         hide-details
       ></v-combobox> -->
       <v-text-field
         placeholder="Search ..."
-        v-model="queryString"
+        v-model="query"
         prepend-inner-icon="mdi-magnify"
-        color="anti"
+        color="accent"
         outlined
         solo
         flat
@@ -30,32 +30,36 @@
 
 <script>
 import FileList from '@/components/FileList'
-// @ is an alias to /src
 
 export default {
   name: 'dashboard',
   components: { FileList },
   data() {
     return {
-      queryString: '',
+      query: '',
       listKey: 0,
       autocomplete: null
     }
   },
+  computed: {
+    queryString() {
+      return '?query=' + this.query + '&profile=';
+    }
+  },
   watch: {
-    queryString: function() {
+    query: function() {
       this.$root.$emit('refreshList', 1);
     }
   },
   mounted() {
-    this.$axios
-      .get(process.env.VUE_APP_AUTH_API_URL + "/api/users/autocomplete")
-      .then(response => {
-        this.autocomplete = response.data.map(item => {
-          return item.username;
-        })
-      })
-      .catch(error => { console.log(error) });
+    // this.$axios
+    //   .get(process.env.VUE_APP_AUTH_API_URL + "/api/users/userslist")
+    //   .then(response => {
+    //     this.autocomplete = response.data.map(item => {
+    //       return item.username;
+    //     })
+    //   })
+    //   .catch(error => { console.log(error) });
 
     this.$root.$on('refreshList', (add) => {
       this.listKey += add;

@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" max-width="600px">
       <template v-slot:activator="{ on }">
 
-      <v-btn text class="white--text" v-on="on">
+      <v-btn depressed color="anti" v-on="on">
         <span class="white--text">UPLOAD</span>
         <unicon right name="export" fill="white" />
       </v-btn>
@@ -72,7 +72,7 @@
         <v-card-actions>
           <v-btn text @click="$refs.form.reset()">Clear</v-btn>
           <v-spacer></v-spacer>
-          <v-btn :disabled="!form" @click="upload" class="white--text" color="anti" depressed>Submit</v-btn>
+          <v-btn :disabled="!form" @click="upload" class="white--text" color="accent" depressed>Submit</v-btn>
         </v-card-actions>
 
       </v-card>

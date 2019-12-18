@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import Dashboard from '../views/Dashboard.vue'
 import UserProfile from '../views/UserProfile.vue'
+import UrlError from '../views/UrlError.vue'
 
 Vue.use(VueRouter)
 
@@ -18,8 +19,9 @@ const routes = [
     component: UserProfile
   },
   {
-    path: '*',
-    redirect: '/'
+    path: '/*',
+    name: 'error-page',
+    component: UrlError
   }
 ]
 

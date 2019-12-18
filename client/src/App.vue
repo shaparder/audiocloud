@@ -7,7 +7,7 @@
     
     <v-snackbar v-model="snackbar" absolute bottom>
       <p>{{ message }}</p>
-      <v-btn color="anti" depressed @click="snackbar = false">Close</v-btn>
+      <v-btn color="accent" depressed @click="snackbar = false">Close</v-btn>
     </v-snackbar>
 
   </v-app>
@@ -23,8 +23,13 @@ export default {
     snackbar: false,
   }),
   computed: {
-    message: function() {
+    message() {
       return this.$store.getters.getMessage
+    }
+  },
+  watch: {
+    message() {
+      this.snackbar = true;
     }
   }
 };

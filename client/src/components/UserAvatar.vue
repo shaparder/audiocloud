@@ -1,9 +1,9 @@
 <template>
   <div class="user-avatar text-center">
-    <v-avatar size="100" color="accent">
+    <v-avatar size="100" color="anti">
       <span class="white--text headline">{{ initial }}</span>
     </v-avatar>
-    <p class="accent--text subheading mt-3">{{ username }}</p>
+    <p class="anti--text subheading mt-3">{{ username }}</p>
   </div>
 </template>
 
