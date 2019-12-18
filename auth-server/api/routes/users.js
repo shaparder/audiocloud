@@ -12,20 +12,21 @@ const router = express.Router();
 
 // validating and registering a new user
 router.post('/register', async (req, res) => {
+  console.log(req.body);
 	// get users collection
 	const users = await loadUsersCollection();
 
 	// validate data
 	var { error } = registerValidation(req.body);
-	if ( error ) return res.status(400).send(error.details[0].message);
+  if ( error ) return res.status(400).send(error.details[0].message);
  
 	// check if user is already in database
 	var emailExist = await users.findOne({ email: req.body.email });
-	if ( emailExist ) return res.status(400).send('email already exists');
+	if ( emailExist ) return res.status(400).send('Email already exists');
 
 	// chec if username already exists
 	var usernameExist = await users.findOne({ username: req.body.username });
-	if ( usernameExist) return res.status(400).send('username is already taken');
+	if ( usernameExist) return res.status(400).send('Username is already taken');
 
 	// hash password
 	var hashedPassword = await bcrypt.hash(req.body.password, 9);
@@ -33,41 +34,50 @@ router.post('/register', async (req, res) => {
 	// get current date
 	var date = new Date().toLocaleString();
 
-	// save new user to database
-	await users.insertOne({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    fullname: req.body.firstname + ' ' + req.body.lastname,
-		username: req.body.username,
-		email: req.body.email, 
-		password: hashedPassword,
-		date: date
-	});
-  res.status(201).send(await users.findOne({ email: req.body.email, date: date }));
+  // save new user to database
+  try {
+    await users.insertOne({
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      fullname: req.body.firstname + ' ' + req.body.lastname,
+      username: req.body.username,
+      email: req.body.email, 
+      password: hashedPassword,
+      date: date
+    });
+    res.status(201).send(`Succesfully created ${req.body.username} account !`);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send('A problem occured when creating user')
+  }
 });
 
 // validate and login user
 router.post('/login', async (req, res) => {
+  console.log(req.body);
 
 	// validate data
 	var { error } = loginValidation(req.body);
-	if ( error ) return res.status(400).send('wrong credentials (validation)');
+	if ( error ) return res.status(400).send('Wrong credentials (validation)');
 
 	// get users collection
 	const users = await loadUsersCollection();
 
 	// check if user email is correct
 	var user = await users.findOne({ email: req.body.email });
-	if ( !user ) return res.status(400).send('wrong credentials (email doesn\'t exist)');
+	if ( !user ) return res.status(400).send('Wrong credentials (email doesn\'t exist)');
 
 	// check if password is correct
 	var validPass = await bcrypt.compare(req.body.password, user.password);
-	if ( !validPass ) return res.status(400).send('wrong credentials (incorrect password)');
+  if ( !validPass ) return res.status(400).send('Wrong credentials (email and password don\'t match)');
+  
+  // get username
+  const username = user.username;
 
 	// create and assign token
-	var token = jwt.sign({ _id: user._id, user: user.username }, process.env.TOKEN_SECRET, { expiresIn: 60 * 60 * 24 * 7 });
-	res.header('auth-token', token).send(`logged in as ${user.username}`);
-
+	var token = jwt.sign({ _id: user._id, user: user.username }, process.env.TOKEN_SECRET, { expiresIn: 60 * 60 });
+	res.set({'token': token, 'username': username}).status(200).send(`Logged in as ${username}`);
+ res.hea
 });
 
 // verify token
@@ -87,5 +97,13 @@ router.get('/verify', (req, res) => {
 		res.status(400).send('Invalid token');
 	}
 });
+
+// get users for autocomplete purpose
+router.get('/autocomplete', async (req, res) => {
+	// get users collection
+  const users = await loadUsersCollection();
+  // return only username
+  return res.send(await users.find({}).project({'username': 1, '_id': 0}).toArray());
+})
 
 module.exports = router;

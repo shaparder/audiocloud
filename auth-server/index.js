@@ -6,9 +6,13 @@ require('dotenv').config();
 const app = express();
 const api = require('./api/routes/users');
 
+const corsOptions = {
+  exposedHeaders: ['token', 'username'],
+};
+
 // middleware
 app.disable('x-powered-by');
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
