@@ -21,6 +21,11 @@ export default {
     user: function() {
       return this.$store.getters.getUser;
     }
+  },
+  mounted() {
+    this.$root.$on('refreshList', (add) => {
+      this.listKey += add;
+    });
   }
 }
 </script>
