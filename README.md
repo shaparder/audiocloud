@@ -17,7 +17,7 @@ sh ./install_dep.sh
 Or do it manually yourself: https://docs.npmjs.com/cli/install
 
 ## running the app (local dev mode)
-#### automated
+### automated
 (this automated run process is intended for _mac_ terminal)
 
 Again a script is provided, run:
@@ -26,7 +26,7 @@ sh ./run.sh
 ```
 It will automatically open new terminal windows and spin-up the servers.
 
-#### manual
+### manual
 Or do it manually yourself in three different terminal windows (one command in each):
 ```bash
 cd audio-server && node index.js
@@ -34,4 +34,5 @@ cd auth-server && node index.js
 cd client && npm run serve
 ```
 
-The 
+The web app is now available at this adress in any browser:
+_localhost:8080_ 
