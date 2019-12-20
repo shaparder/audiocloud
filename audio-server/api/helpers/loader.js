@@ -1,10 +1,11 @@
 const multer = require('multer');
 const mkdirp = require('mkdirp');
+const path = require('path');
 
 // storage path and file name, creates folder if it doesn't exist
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		const dest = process.env.TRACKFILES_PATH;
+		const dest = process.env.TRACKFILES_PATH || path.join(process.cwd(), '/trackfiles');
 		mkdirp.sync(dest);
 		cb(null, dest);
 	},
