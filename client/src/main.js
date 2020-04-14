@@ -7,9 +7,9 @@ import axios from 'axios'
 import { store } from './store/store.js'
 import './helpers/filters.js'
 import Unicon from 'vue-unicons'
-import { uniHeart, uniBoombox, uniSearch, uniUser, uniCog, uniMusic, uniImport, uniExport, uniSignOutAlt, uniSilentSquint, uniClock, uniSort, uniMusicNote, uniDocument, uniExpandArrows, uniAngleDown, uniFileSlash } from 'vue-unicons/src/icons'
+import { uniHeart, uniBoombox, uniSearch, uniUser, uniCog, uniMusic, uniImport, uniExport, uniSignOutAlt, uniSilentSquint, uniClock, uniSort, uniMusicNote, uniDocument, uniExpandArrows, uniAngleDown, uniFileSlash, uniPause, uniPlay, uniBackward, uniForward, uniVolumeUp, uniVolumeDown, uniVolumeMute, uniVolume } from 'vue-unicons/src/icons'
 
-Unicon.add([uniHeart, uniBoombox, uniSearch, uniUser, uniCog, uniMusic, uniImport, uniExport, uniSignOutAlt, uniSilentSquint, uniClock, uniSort, uniMusicNote, uniDocument, uniExpandArrows, uniAngleDown, uniFileSlash])
+Unicon.add([uniHeart, uniBoombox, uniSearch, uniUser, uniCog, uniMusic, uniImport, uniExport, uniSignOutAlt, uniSilentSquint, uniClock, uniSort, uniMusicNote, uniDocument, uniExpandArrows, uniAngleDown, uniFileSlash, uniPause, uniPlay, uniBackward, uniForward, uniVolumeUp, uniVolumeDown, uniVolumeMute, uniVolume])
 Vue.use(Unicon)
 
 Vue.prototype.$axios = axios

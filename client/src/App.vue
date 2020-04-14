@@ -12,11 +12,16 @@
       <v-btn color="accent" depressed @click="snackbar = false">Close</v-btn>
     </v-snackbar>
 
+    <!-- <v-footer absolute padless>
+      <Player />
+    </v-footer> -->
+
   </v-app>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar';
+// import Player from '@/components/Player';
 
 export default {
   name: 'App',

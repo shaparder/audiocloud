@@ -89,7 +89,7 @@ router.get('/verify', (req, res) => {
 	// check if token exists
 	if( !token ) return res.status(401).send('Acces denied');
 
-	//check if token is correct
+	// check if token is correct
 	try {
 		const verified = jwt.verify(token, process.env.TOKEN_SECRET);
 		req.user = verified;

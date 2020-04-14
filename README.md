@@ -3,6 +3,7 @@
 Web-app with a purpose of audio server for it's users.
 Using the micro services architecture, the web app runs on two backend servers and a frontend client.
 
+
 ## installation
 (this automated installation process is intended for unix env based shells aka _mac_ or _linux_)
 
@@ -36,3 +37,7 @@ cd client && npm run serve
 
 The web app is now available at this adress in any browser:
 _localhost:8080_ 
+
+## usage
+
+You now have a fully functionnal website that stores audio files of its users on the server
